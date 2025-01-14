@@ -1,9 +1,12 @@
+"""
+Database models for the PokeAPI application.
+"""
+
 from sqlalchemy import Column, ForeignKey, Integer, String, Date
 from sqlalchemy.orm import relationship
 from .sqlite import Base
 
-
-class Trainer(Base):
+class Trainer(Base):  # pylint: disable=too-few-public-methods
     """
         Class representing a pokemon trainer
     """
@@ -16,7 +19,7 @@ class Trainer(Base):
     inventory = relationship("Item", back_populates="trainer")
     pokemons = relationship("Pokemon", back_populates="trainer")
 
-class Pokemon(Base):
+class Pokemon(Base):  # pylint: disable=too-few-public-methods
     """
         Class representing a pokemon
         Parameters:
@@ -33,7 +36,7 @@ class Pokemon(Base):
 
     trainer = relationship("Trainer", back_populates="pokemons")
 
-class Item(Base):
+class Item(Base):  # pylint: disable=too-few-public-methods
     """
         Class representing a pokemon trainer
     """

@@ -1,55 +1,83 @@
+"""
+Schemas for the PokeAPI application.
+"""
+
 from datetime import date
-from typing import  List, Optional, Union
+from typing import List, Optional, Union
 from pydantic import BaseModel
 
-#
-#  ITEM
-#
 class ItemBase(BaseModel):
+    """
+    Base schema for an item.
+    """
     name: str
     description: Union[str, None] = None
 
 class ItemCreate(ItemBase):
-    pass
+    """
+    Schema for creating a new item.
+    """
 
 class Item(ItemBase):
+    """
+    Schema for representing an item.
+    """
     id: int
     trainer_id: int
 
     class Config:
+        """
+        Configuration for the schema.
+        """
         orm_mode = True
 
-#
-#  POKEMON
-#
 class PokemonBase(BaseModel):
+    """
+    Base schema for a Pokemon.
+    """
     api_id: int
     custom_name: Optional[str] = None
 
 class PokemonCreate(PokemonBase):
-    pass
+    """
+    Schema for creating a new Pokemon.
+    """
 
 class Pokemon(PokemonBase):
+    """
+    Schema for representing a Pokemon.
+    """
     id: int
     name: str
     trainer_id: int
 
     class Config:
+        """
+        Configuration for the schema.
+        """
         orm_mode = True
-#
-#  TRAINER
-#
+
 class TrainerBase(BaseModel):
+    """
+    Base schema for a trainer.
+    """
     name: str
     birthdate: date
 
 class TrainerCreate(TrainerBase):
-    pass
+    """
+    Schema for creating a new trainer.
+    """
 
 class Trainer(TrainerBase):
+    """
+    Schema for representing a trainer.
+    """
     id: int
     inventory: List[Item] = []
-    pokemons: List[Pokemon] = []
 
     class Config:
+        """
+        Configuration for the schema.
+        """
         orm_mode = True

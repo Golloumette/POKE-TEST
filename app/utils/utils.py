@@ -1,6 +1,11 @@
+"""
+Utility functions for the PokeAPI application.
+"""
+
 from datetime import date
-from app import models
-from app.sqlite import SessionLocal, engine
+from .. import models
+from ..sqlite import SessionLocal, engine
+
 models.Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -13,12 +18,11 @@ def get_db():
     finally:
         database.close()
 
-
-
 def age_from_birthdate(birthdate):
     """
         Return an age from a birthday
     """
     today = date.today()
-    return today.year - birthdate.year - ((today.month, today.day)
-        < (birthdate.month, birthdate.day))
+    return today.year - birthdate.year - (
+        (today.month, today.day) < (birthdate.month, birthdate.day)
+    )
