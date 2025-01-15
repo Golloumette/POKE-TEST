@@ -19,4 +19,5 @@ class UserBehavior(TaskSet):
 
 class WebsiteUser(HttpUser):
     tasks = [UserBehavior]
-    wait_time = between(1, 5)  # Temps d'attente entre les tâches (en secondes)
+    wait_time = between(1, 5)  
+    host = "http://127.0.0.1:8000"  

@@ -81,3 +81,31 @@ class Trainer(TrainerBase):
         Configuration for the schema.
         """
         orm_mode = True
+
+class BattleRequest(BaseModel):
+    """
+    Schema for a battle request.
+    """
+    first_pokemon_id: int
+    second_pokemon_id: int
+
+class BattleResult(BaseModel):
+    """
+    Schema for the result of a battle.
+    """
+    winner: str
+    score: str
+
+class Stat(BaseModel):
+    """
+    Schema for a Pokemon's stat.
+    """
+    name: str
+    base_stat: int
+    
+class PokeRandom(BaseModel):
+    """
+    Schema for 3 random pokemons with their stats from the api.
+    """
+    name: str
+    stats: dict

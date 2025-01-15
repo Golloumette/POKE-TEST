@@ -3,6 +3,7 @@ Module for interacting with the PokeAPI and handling Pokemon battles.
 """
 
 import requests
+import random
 
 BASE_URL = "https://pokeapi.co/api/v2"
 
@@ -67,4 +68,18 @@ def battle_pokemon(first_api_id, second_api_id):
     battle_result = battle_compare_stats(
         first_pokemon, second_pokemon
     )
+    if battle_result['winner'] == 'first_pokemon':
+        battle_result['winner'] = get_pokemon_name(first_api_id)
+    elif battle_result['winner'] == 'second_pokemon':
+        battle_result['winner'] = get_pokemon_name(second_api_id)
     return battle_result
+
+def get_random_pokemons_endpoint():
+    """
+    Get 3 random pokemons with their stats
+    """
+    pokemons = {}
+    for _ in range(3):
+        pokemon_id = random.randint(1, 151)
+        pokemons["wololo"]= {"b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6}
+    return pokemons

@@ -20,10 +20,21 @@ def get_pokemons(skip: int = 0, limit: int = 100, database: Session = Depends(ge
     pokemons = actions.get_pokemons(database, skip=skip, limit=limit)
     return pokemons
 
-@router.post("/battle/", response_model=dict)
-def battle_pokemons(first_pokemon_id: int, second_pokemon_id: int):
+@router.post("/battle/", response_model=schemas.BattleResult)
+def battle_pokemons(battle_request: schemas.BattleRequest):
     """
     Battle between two pokemons by their IDs
     """
-    result = battle_pokemon(first_pokemon_id, second_pokemon_id)
+    result = battle_pokemon(
+        battle_request.first_pokemon_id,
+        battle_request.second_pokemon_id
+    )
     return result
+
+@router.get("/pokemonsRandom/", response_model=schemas.PokeRandom)
+def get_random_pokemons_endpoint():
+    """
+    Return 3 random pokemons with their stats from the api.
+    """
+    pokemons = get_random_pokemons_endpoint()
+    return pokemons

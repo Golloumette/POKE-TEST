@@ -6,7 +6,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Date
 from sqlalchemy.orm import relationship
 from .sqlite import Base
 
-class Trainer(Base):  # pylint: disable=too-few-public-methods
+class Trainer(Base): 
     """
         Class representing a pokemon trainer
     """
@@ -19,7 +19,7 @@ class Trainer(Base):  # pylint: disable=too-few-public-methods
     inventory = relationship("Item", back_populates="trainer")
     pokemons = relationship("Pokemon", back_populates="trainer")
 
-class Pokemon(Base):  # pylint: disable=too-few-public-methods
+class Pokemon(Base): 
     """
         Class representing a pokemon
         Parameters:
@@ -36,7 +36,7 @@ class Pokemon(Base):  # pylint: disable=too-few-public-methods
 
     trainer = relationship("Trainer", back_populates="pokemons")
 
-class Item(Base):  # pylint: disable=too-few-public-methods
+class Item(Base): 
     """
         Class representing a pokemon trainer
     """
