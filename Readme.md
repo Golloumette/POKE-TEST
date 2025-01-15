@@ -6,6 +6,12 @@ Groupe :
         - Caron Quentin
         - Verbeque Lucas
 
+Attribution des taches
+1) Le code (Quentin)
+2) Locust (Lucas)
+3) Pylint (Caroline)
+4) Unittest (Lucas)
+5) Coverage (Caroline)
 
 Elements faits : 
     Endpoint A : Le combat entre 2 pokémons.
