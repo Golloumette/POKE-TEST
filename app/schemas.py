@@ -107,5 +107,4 @@ class PokeRandom(BaseModel):
     """
     Schema for 3 random pokemons with their stats from the api.
     """
-    name: str
-    stats: dict
+    pokemons: dict

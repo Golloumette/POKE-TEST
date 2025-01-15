@@ -74,12 +74,12 @@ def battle_pokemon(first_api_id, second_api_id):
         battle_result['winner'] = get_pokemon_name(second_api_id)
     return battle_result
 
-def get_random_pokemons_endpoint():
+def get_random_pokemons():
     """
-    Get 3 random pokemons with their stats
+    Get nb random pokemons with their stats
     """
     pokemons = {}
-    for _ in range(3):
-        pokemon_id = random.randint(1, 151)
-        pokemons["wololo"]= {"b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6}
+    for i in range(3):
+        id = random.randint(1, 1000)
+        pokemons[get_pokemon_name(id)] = get_pokemon_stats(id)
     return pokemons

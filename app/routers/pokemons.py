@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 from .. import actions, schemas
 from ..utils.utils import get_db
-from ..utils.pokeapi import battle_pokemon
+from ..utils.pokeapi import battle_pokemon, get_random_pokemons
 
 router = APIRouter()
 
@@ -32,9 +32,9 @@ def battle_pokemons(battle_request: schemas.BattleRequest):
     return result
 
 @router.get("/pokemonsRandom/", response_model=schemas.PokeRandom)
-def get_random_pokemons_endpoint():
+def fetch_random_pokemons():
     """
     Return 3 random pokemons with their stats from the api.
     """
-    pokemons = get_random_pokemons_endpoint()
-    return pokemons
+    pokemons = get_random_pokemons()
+    return {"pokemons": pokemons}
