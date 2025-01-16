@@ -41,19 +41,19 @@ def test_create_trainer():
     assert response.status_code == 200
 
 
-def test_battle_endpoint_mock_first_wins():
+def test_battle_endpoint_second_wins():
     """
-    Test the /battle/ endpoint with mocked battle_pokemon where the first pokemon wins.
+    Test the /battle/ endpoint with mocked battle_pokemon where the second pokemon wins.
     """
     response = client.post("pokemons/battle/", json={
-        "first_pokemon_id": 3,
-        "second_pokemon_id": 4
+        "first_pokemon_id": 4,
+        "second_pokemon_id": 3
     })
     assert response.status_code == 200
     assert response.json()["winner"] == "venusaur"
 
 
-def test_battle_endpoint_mock_draw():
+def test_battle_endpoint_draw():
     """
     Test the /battle/ endpoint with mocked battle_pokemon resulting in a draw.
     """
@@ -63,19 +63,57 @@ def test_battle_endpoint_mock_draw():
     })
     assert response.status_code == 200
     assert response.json()["winner"] == "draw"
-
-def test_getTrainer():
-    response = client.get("trainers/1")
+  
+def test_create_trainer():
+    """
+    Test si trainer is present
+    """
+    response = client.post("trainers/", json={
+       "name" : "sacha",
+       "birthdate" : "1986-05-21" 
+    })
     assert response.status_code == 200
-    trainer = response.json()
-    assert "name" in trainer 
-    assert trainer["name"] == "sacha"
-
-def test_return_mock(mocker):
-    mocker.patch(
-      "main.get_double",
-      return_value=10
-   )
-    response = client.get("/5")
-    assert response.json() == 10
+    
+@patch("app.routers.pokemons.battle_pokemon", return_value={"winner": "ivysaur", "score": "2-1"})
+def test_battle_endpoint_winner_mock(mock_battle_pokemon):
+    """
+    Test the /battle/ endpoint for determining the winner (mocked version).
+    """
+    response = client.post("pokemons/battle/", json={
+        "first_pokemon_id": 1,
+        "second_pokemon_id": 2
+    })
     assert response.status_code == 200
+    json_response = response.json()
+    assert "winner" in json_response
+    assert json_response["winner"] == "ivysaur"
+    mock_battle_pokemon.assert_called_once_with(1, 2)
+
+@patch("app.routers.pokemons.battle_pokemon", return_value={"winner": "venusaur", "score": "0-1"})
+def test_battle_endpoint_second_wins_mock(mock_battle_pokemon):
+    """
+    Test the /battle/ endpoint where the second pokemon wins (mocked version).
+    """
+    response = client.post("pokemons/battle/", json={
+        "first_pokemon_id": 4,
+        "second_pokemon_id": 3
+    })
+    assert response.status_code == 200
+    json_response = response.json()
+    assert json_response["winner"] == "venusaur"
+    mock_battle_pokemon.assert_called_once_with(4, 3)
+    
+@patch("app.routers.trainers.actions.get_trainers", return_value=[
+    {"id": 1, "name": "sacha", "birthdate": "1986-05-21"}
+])
+def test_trainer_mock(mock_get_trainers):
+    """
+    Test the /trainers/ GET endpoint with mocked get_trainers.
+    Vérifie si 'sacha' est présent dans la liste des trainers.
+    """
+    response = client.get("/trainers")  # Corrected endpoint path
+    assert response.status_code == 200
+    trainers_list = response.json()
+    assert any(trainer["name"] == "sacha" for trainer in trainers_list)
+    mock_get_trainers.assert_called_once()
+
